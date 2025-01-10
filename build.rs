@@ -64,6 +64,19 @@ fn main() -> Result<(), Box<dyn Error>> {
             std::fs::read_to_string(&svd_path)?
         };
         std::fs::write(svd_path.with_extension("svd.patched"), &svd)?;
+
+        // SVD -> RS
+        let cfg = svd2rust::Config {
+            target: svd2rust::util::Target::None,
+            make_mod: true,
+            generic_mod: true,
+            strict: true,
+            log_level: Some("DEBUG".into()),
+            ..Default::default()
+        };
+
+        let gen = svd2rust::generate(&svd, &cfg)?;
+        std::fs::write(out_dir.join(format!("{cpu}.rs")), &gen.lib_rs)?;
     }
 
     todo!("testing...");

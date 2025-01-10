@@ -98,4 +98,5 @@ optional = true
 
 [build-dependencies]
 atdf2svd = "0.5"
+svd2rust = "0.28"
 svdtools = { version = "0.4", path = "../svdtools" }
